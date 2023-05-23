@@ -1,0 +1,9 @@
+version: "1"
+services:
+  student:
+    container_name: student-app
+    build:
+      context:./student
+      dockerfile:Dockerfile
+    ports:
+      -"3000:3000"
