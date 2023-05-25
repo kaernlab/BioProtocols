@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export function TopNavbar() {
+function TopNavbar() {
   return (
     <Grid container direction="row" justifyContent="space-between">
       <Grid item>
@@ -13,7 +13,7 @@ export function TopNavbar() {
           Student version
         </Box>
       </Grid>
-      <Grid item >
+      <Grid item>
         <IconButton
           size="large"
           edge="end"
@@ -26,3 +26,5 @@ export function TopNavbar() {
     </Grid>
   );
 }
+
+export default TopNavbar;

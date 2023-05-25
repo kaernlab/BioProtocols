@@ -1,39 +1,16 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ],
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "ignorePatterns": [
-    "*.css",
-    "*.svg"
-  ],
-  "rules": {
-    "quotes": [
-      "error",
-      "single"
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "@typescript-eslint"
     ],
-    "jsx-quotes": [
-      "error",
-      "prefer-double"
-    ]
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "@typescript-eslint/dot-notation": "error"
     }
-  }
 }

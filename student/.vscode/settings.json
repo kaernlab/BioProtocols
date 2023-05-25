@@ -1,5 +1,4 @@
 {
-  "eslint.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -8,5 +7,5 @@
     "typescript",
     "typescriptreact"
   ],
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": true
 }
