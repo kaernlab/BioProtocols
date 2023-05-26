@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home';
-import { type PageState } from '../types';
-import LabDoing from './LabDoing';
-import LabStart from "./LabStart";
-import LabEnd from "./LabEnd";
-import Error from './Error';
+import { type PageState } from '../utils/types';
+
+import Lab from './Lab/Lab';
 
 function PageController() {
   const [currentPage, setCurrentPage] = useState<PageState>('HOME');
@@ -21,42 +19,30 @@ function PageController() {
   }, [])
 
   const handleSelectLab = (selectedLabId: string) => {
-    console.log("User has selected ", selectedLabId)
     setCurrentLabId(selectedLabId);
     setCurrentPage('LAB_START');
   };
 
-  const handleStartLab = () => {
-    setCurrentPage('LAB_DOING')
-  }
-
   const handleGoHome = () => {
     setCurrentLabId(""); //clear selected
     setCurrentPage('HOME');
-    console.log("Back at home, current Lab ID is", currentLabId)
-  }
-
-  const handleFinishLab = () => {
-    setCurrentPage("LAB_FINISHED")
-  }
-
-  const handleRestartLab = () => {
-    setCurrentLabId('LAB_START')
   }
 
   return (
     <div>
       {currentPage === 'HOME' ? (
         <Home handleSelectLab={handleSelectLab} />
-      ) : currentPage === 'LAB_START' ? (
-        <LabStart currentLabId={currentLabId} goHome={handleGoHome} handleStartLab={handleStartLab} />
-      ) : currentPage === 'LAB_DOING' ? (
-        <LabDoing currentLabId={currentLabId} handleSubmit={handleFinishLab} />
-      ) : currentPage === 'LAB_FINISHED' ? (
-        <LabEnd restartLab={handleRestartLab} goHome={handleGoHome} />
       ) : (
-        <Error />
-      )}
+        <Lab
+          currentPage={currentPage}
+          currentLabId={currentLabId}
+          goHome={handleGoHome}
+          handleFinishLab={() => setCurrentPage("LAB_FINISHED")}
+          handleStartLab={() => setCurrentPage('LAB_DOING')}
+          handleRestartLab={() => setCurrentPage('LAB_START')}
+        />
+      )
+      }
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
-import ClickableLabCard from '../style/Styled';
+import ClickableLabCard from '../utils/Styled';
 
 type Lab = {
   id: string;
