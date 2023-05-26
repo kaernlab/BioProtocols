@@ -11,7 +11,7 @@ function LabStart(
       handleStartLab: () => void
     }) {
 
-  // TODO: Have React Markdown render with MUI styles
+  // TODO: Refractor later to change ReactMarkdown fonts to MUI fonts
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>

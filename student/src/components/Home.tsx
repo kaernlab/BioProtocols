@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 import ClickableLabCard from '../utils/Styled';
+import { ILabData } from '../utils/interfaces';
 
 type Lab = {
   id: string;
   title: string;
-  content: string; // Use QuizContent type later
 };
 
 function Home(
-  { handleSelectLab }:
-    { handleSelectLab: (selectedLabId: string) => void },
+  {
+    data,
+    handleSelectLab
+  }:
+    {
+      data: Record<string, ILabData>,
+      handleSelectLab: (selectedLabId: string) => void
+    },
 ) {
   const [labList, setLabList] = useState<Lab[]>([]);
 
   useEffect(() => {
-    // Call API here to populate lab sdata
-    const obj: Lab[] = [
-      {
-        id: 'exercise10',
-        title: 'Exercise #10: Bacterial Transformations',
-        content: 'other',
-      },
-      {
-        id: 'exercise11',
-        title: 'Exercise #11: Something else',
-        content: 'other',
-      },
-    ];
-    setLabList(obj);
+    const exerciseKeys = Object.keys(data);
+    const temp = exerciseKeys.map((key) => ({
+      id: key,
+      title: data[key].title,
+    }))
+    setLabList(temp);
   }, []);
 
   function handleLabCardClick(labId: string) {
@@ -40,14 +38,15 @@ function Home(
       <Grid item xs={12}>
         <Box typography='h5'> Select lab:</Box>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item container spacing={2} flexDirection="column">
         {labList.map(lab => (
-          <ClickableLabCard
-            key={lab.id}
-            id={lab.id}
-            title={lab.title}
-            onClick={() => handleLabCardClick(lab.id)}
-          />
+          <Grid item key={lab.id} children={
+            <ClickableLabCard
+              id={lab.id}
+              title={lab.title}
+              onClick={() => handleLabCardClick(lab.id)}
+            />
+          } />
         ))}
       </Grid>
     </Grid>
