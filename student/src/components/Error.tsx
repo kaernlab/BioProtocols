@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box } from '@mui/material';
+import React from 'react';
 
 function Error() {
   return (
@@ -11,7 +11,7 @@ function Error() {
         Please see your instructor
       </Box>
     </Box>
-  )
+  );
 }
 
 export default Error;

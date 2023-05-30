@@ -1,42 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Box, CardContent } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
+import AvTimerIcon from '@mui/icons-material/AvTimer';
+import TimerDisplay from './TimerDisplay';
+import { ITime } from '../../utils/interfaces';
 
-// TODO: Make this more efficient!!
-// Write now we're writing to localstorage every second (this is bad)
-const TimerComponent = () => {
-  const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+function TimerComponent() {
+  const storedTime = localStorage.getItem('elapsedTime');
+  const [time, setTime] = useState<ITime>(
+    storedTime
+      ? (JSON.parse(storedTime) as ITime)
+      : { hours: 0, minutes: 0, seconds: 0 },
+  );
 
   useEffect(() => {
+    let updatedTime: ITime = time;
+
     const timerId = setInterval(() => {
-      setTime(prevTime => {
+      setTime((prevTime) => {
         const seconds = prevTime.seconds + 1;
         const minutes = prevTime.minutes + Math.floor(seconds / 60);
         const hours = prevTime.hours + Math.floor(minutes / 60);
-        const updatedTime = {
-          hours: hours,
+        updatedTime = {
+          hours,
           minutes: minutes % 60,
-          seconds: seconds % 60
+          seconds: seconds % 60,
         };
-        localStorage.setItem('elapsedTime', JSON.stringify(updatedTime));
+
         return updatedTime;
       });
     }, 1000);
 
+    // On component unmount
     return () => {
       clearInterval(timerId);
+      localStorage.setItem('elapsedTime', JSON.stringify(updatedTime));
     };
   }, []);
 
-
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 150, maxHeight: '50px' }} elevation={0}>
       <CardContent>
-        <Box typography="body1">
-          Time elapsed: {time.hours}:{time.minutes}:{time.seconds}
-        </Box>
+        <Grid container spacing={0.5} direction="row" display="flex">
+          <Grid item>
+            <AvTimerIcon />
+          </Grid>
+          <Grid item>
+            <TimerDisplay
+              hours={time.hours}
+              minutes={time.minutes}
+              seconds={time.seconds}
+            />
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );
-};
+}
 
 export default TimerComponent;

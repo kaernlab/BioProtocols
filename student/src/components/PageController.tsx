@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home';
-import { type PageState } from '../utils/types';
-import Lab from './Lab/Lab';
+import { type TPageState } from '../utils/types';
+import Lab from './Lab';
 import jsonData from '../data/data.json';
 import { ILabData } from '../utils/interfaces';
 
@@ -10,20 +10,24 @@ function PageController() {
   // TODO: Call API HERE
   const typedData: Record<string, ILabData> = jsonData;
 
-  const [currentPage, setCurrentPage] = useState<PageState>('HOME');
-  const [currentLabId, setCurrentLabId] = useState("");
+  const storedLabId = localStorage.getItem('currentLabId');
+  const [currentLabId, setCurrentLabId] = useState(
+    storedLabId
+      ? (storedLabId as TPageState)
+      : '',
+  );
+
+  const storedPage = localStorage.getItem('currentPage');
+  const [currentPage, setCurrentPage] = useState<TPageState>(
+    storedPage
+      ? (storedPage as TPageState)
+      : 'HOME',
+  );
 
   useEffect(() => {
-    // TODO: Set the page in localstorage so that when a user refreshes, they stay on the same page
-    // Retrieve data from localStorage on component mount
-    const storedPage = localStorage.getItem('currentPage');
-
-    if (storedPage) {
-      console.log(storedPage)
-      setCurrentPage(storedPage as PageState);
-    }
-    localStorage.setItem('currentPage', currentPage)
-  }, [])
+    localStorage.setItem('currentPage', currentPage);
+    localStorage.setItem('currentLabId', currentLabId);
+  }, [currentPage, currentLabId]);
 
   const handleSelectLab = (selectedLabId: string) => {
     setCurrentLabId(selectedLabId);
@@ -31,9 +35,9 @@ function PageController() {
   };
 
   const handleGoHome = () => {
-    setCurrentLabId(""); //clear selected
+    setCurrentLabId(''); // clear selected lab
     setCurrentPage('HOME');
-  }
+  };
 
   return (
     <div>
@@ -48,12 +52,11 @@ function PageController() {
           currentPage={currentPage}
           currentLabId={currentLabId}
           goHome={handleGoHome}
-          handleFinishLab={() => setCurrentPage("LAB_FINISHED")}
+          handleFinishLab={() => setCurrentPage('LAB_FINISHED')}
           handleStartLab={() => setCurrentPage('LAB_DOING')}
           handleRestartLab={() => setCurrentPage('LAB_START')}
         />
-      )
-      }
+      )}
     </div>
   );
 }

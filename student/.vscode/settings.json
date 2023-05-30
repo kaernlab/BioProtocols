@@ -6,6 +6,5 @@
     "javascript",
     "typescript",
     "typescriptreact"
-  ],
-  "editor.formatOnSave": true
+  ]
 }

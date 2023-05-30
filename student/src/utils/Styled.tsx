@@ -3,11 +3,18 @@ import {
   Box, Button, Card, CardActions, CardContent,
 } from '@mui/material';
 
-
 function ClickableLabCard(
-  { id, title, onClick }:
-    { id: string, title: string, onClick: () => void }) {
-
+  {
+    id,
+    title,
+    onClick,
+  }:
+  {
+    id:
+    string, title:
+    string, onClick: () => void
+  },
+) {
   return (
     <Card variant="outlined" sx={{ minWidth: 275 }} key={id}>
       <CardContent>

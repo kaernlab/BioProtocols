@@ -1,16 +1,31 @@
 {
-    "parser": "@typescript-eslint/parser",
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "airbnb-typescript"
+    ],
+    "overrides": [],
     "parserOptions": {
+        //"ecmaVersion": "latest",
+        //"sourceType": "module",
         "project": "./tsconfig.json"
     },
     "plugins": [
-        "@typescript-eslint"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        "react"
     ],
     "rules": {
-        "@typescript-eslint/dot-notation": "error"
+        "@typescript-eslint/indent": [
+            "error",
+            2,
+            {
+                "ignoredNodes": [
+                    "TSTypeParameterInstantiation"
+                ]
+            }
+        ]
     }
 }

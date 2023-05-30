@@ -10,3 +10,14 @@ export interface ILabData {
   labContent: ILabProtocols;
   labFinishedBody: string;
 }
+
+export interface ILab {
+  id: string;
+  title: string;
+}
+
+export interface ITime {
+  hours: number,
+  minutes: number,
+  seconds: number
+}
