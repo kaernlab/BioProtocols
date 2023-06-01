@@ -17,15 +17,5 @@
     "plugins": [
         "react"
     ],
-    "rules": {
-        "@typescript-eslint/indent": [
-            "error",
-            2,
-            {
-                "ignoredNodes": [
-                    "TSTypeParameterInstantiation"
-                ]
-            }
-        ]
-    }
+    "rules": {}
 }

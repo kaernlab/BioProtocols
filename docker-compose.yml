@@ -6,4 +6,27 @@ services:
       context: ./student
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - '3000:3000'
+    volumes:
+      - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
+    restart: on-failure
+  admin:
+    container_name: admin-app
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
+    restart: on-failure
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - '3005:3005'
+    volumes:
+      - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
+    restart: on-failure

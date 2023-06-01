@@ -28,34 +28,34 @@ function Lab(
   }, []);
 
   switch (currentPage) {
-  case 'LAB_START':
-    return (
-      <LabStart
-        title={displayData?.title || ''}
-        labStartBody={displayData?.labStartBody || ''}
-        goHome={goHome}
-        handleStartLab={handleStartLab}
-      />
-    );
-  case 'LAB_DOING':
-    return (
-      <LabDoing
-        handleSubmit={handleFinishLab}
-        labContent={displayData?.labContent as ILabProtocols || ''}
-      />
-    );
-  case 'LAB_FINISHED':
-    return (
-      <LabEnd
-        labEndContent={displayData?.labFinishedBody || ''}
-        restartLab={handleRestartLab}
-        goHome={goHome}
-      />
-    );
-  default:
-    return (
-      <Error />
-    );
+    case 'LAB_START':
+      return (
+        <LabStart
+          title={displayData?.title || ''}
+          labStartBody={displayData?.labStartBody || ''}
+          goHome={goHome}
+          handleStartLab={handleStartLab}
+        />
+      );
+    case 'LAB_DOING':
+      return (
+        <LabDoing
+          handleSubmit={handleFinishLab}
+          labContent={displayData?.labContent as ILabProtocols || ''}
+        />
+      );
+    case 'LAB_FINISHED':
+      return (
+        <LabEnd
+          labEndContent={displayData?.labFinishedBody || ''}
+          restartLab={handleRestartLab}
+          goHome={goHome}
+        />
+      );
+    default:
+      return (
+        <Error />
+      );
   }
 }
 

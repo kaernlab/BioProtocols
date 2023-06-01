@@ -1,4 +1,4 @@
-.PHONY: student admin
+.PHONY: student admin server
 
 student:
 	@cd student && yarn
@@ -6,4 +6,7 @@ student:
 admin:
 	@cd admin && yarn
 
-app: student admin
+server:
+	@cd admin && yarn
+
+app: student admin server
