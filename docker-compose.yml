@@ -1,32 +1,55 @@
-version: "1"
+version: "3.3"
 services:
+  nginx:
+    depends_on:
+      - student
+      - admin
+      - server
+    restart: always # because it is routing traffic to our entire app
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '80:80'
   student:
-    container_name: student-app
     build:
       context: ./student
       dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
+    #ports:
+    #  - '3000:3000'
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
+    container_name: student
   admin:
-    container_name: admin-app
     build:
       context: ./admin
       dockerfile: Dockerfile
-    ports:
-      - '3001:3001'
+    #ports:
+    #  - '3001:3001'
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
+    container_name: admin
   server:
     container_name: server
     build:
       context: ./server
       dockerfile: Dockerfile
-    ports:
-      - '3005:3005'
+    #ports:
+    #  - '3005:3005'
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
+    env_file:
+      - ./env/backend.env
+  mongo:
+    image: 'mongo'
+    container_name: 'mongo-db'
+    ports:
+      - '27017-27019:27017-27019'
+    volumes: 
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./db/mongo-volume:/data/db
+    env_file:
+      - ./env/mongo.env

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import LoginForm from './LoginForm';
-import { FormValues, Credentials } from '../../utils/interfaces';
+import { IFormValues, ICredentials } from '../../utils/interfaces';
 import { TUserToken } from '../../utils/types';
 
-async function loginUser(credentials: Credentials) {
+async function loginUser(credentials: ICredentials) {
   return fetch('http://localhost:3005/login', {
     method: 'POST',
     headers: {
@@ -20,7 +20,7 @@ function Login(
     setToken: (userToken: TUserToken) => void
   },
 ) {
-  const handleLogin = async (values: FormValues) => {
+  const handleLogin = async (values: IFormValues) => {
     const token = await loginUser({
       username: values.username,
       password: values.password,

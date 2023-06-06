@@ -1,0 +1,40 @@
+{
+  "exercise10": {
+    "title": "Exercise #10: Bacterial Transformations",
+    "labStartBody": "<h2>Learning Objectives<\/h2> At the end of the activity, you will be able to: - Understand the theory behind bacterial transformations - Perform a bacterial transformation using E.coli cells <strong>Abilities<\/strong>: - Accurate pipetting - Performing a bacterial transformation <strong>Skills<\/strong>: - Spotting and streaking cells on agar plates - Determining proper controls and antibiotic selections.",
+    "labContent": {
+      "header": "## Instructions \n\n For this experiment we will be doing two transformations using the ligation product we produced in Exercise 9. We will be doing another transformation with a plasmid that we know has been successfully been transformed in the past from our samples in the freezer (your positive control).",
+      "questions": [
+        "1. Retrieve the appropriate number of tubes containing competent E. coli cells from the -80°C freezer. Place the tubes in the ice bucket and thaw for 10-15 min.",
+        "2. Turn on your flame before opening the tubes and **ensure the following steps are done in a sterile environment (See exercise 1).**",
+        "3. On ice, mix 50µL of competent cells and 2µl of the plasmid DNA. The concentration of plasmid DNA should be in the 20-200 ng/µL range, - mix with pipette",
+        "4. Incubate on ice for 20 minutes",
+        "5. Heat shock at 42˚ for 45 seconds. Return to ice.",
+        "6. Add 1ml of LB media. Under a flame with sterile technique",
+        "7. Move tubes to 37˚ - rolling or shaking it best, but just sitting in a rack is OK. Incubate for 1 hr.",
+        "8. Spin down cells at in a microfuge at top speed for 10-30 seconds.",
+        "**Turn on your flame for the next steps**",
+        "9. Remove all but ~50µl of the media using a pipette.",
+        "10. Resuspend the cells by pipetting up and down, and plate on LB + selection. (Selection is the antibiotic resistance of your plasmid). To plate the cell suspension, just take it up with a pipette and pipette it into the middle of the plate.",
+        "11. Retrieve a vial of beads and add approximately 6-10 beads to your plate. Make sure all the beads have passed through the sample in the middle of the plate by tilting the plate.",
+        "12. Now shake your plate on the lab bench to ensure that the cell suspension is spread over the plate",
+        "13. Put the plates upside down (agar side up) in the 37°C incubator.",
+        "14. Incubate for 14-18 hours until distinct colonies are clearly visible. Do not overgrow. Selection may be lost over time as the antibiotic starts to break down."
+      ],
+      "footer": "Note-- if it is your first time conducting a bacterial transformation, do the experiment with a positive and a negative control. The positive and negative controls. The positive control experiment is a transformation with stock DNA plasmid. Your negative control experiment is a mock transformation with water"
+    },
+    "labFinishedBody": "## Lab finished\n\nPlease show this page to your instructor"
+  },
+  "exercise11": {
+    "title": "Exercise #11: Another Exercise",
+    "labStartBody": "## Learning Objectives",
+    "labContent": {
+      "header": "head",
+      "questions": [
+        "1. Example Question 1"
+      ],
+      "footer": "footer"
+    },
+    "labFinishedBody": "## Lab finished"
+  }
+}

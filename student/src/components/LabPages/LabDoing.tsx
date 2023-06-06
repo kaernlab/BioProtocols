@@ -40,10 +40,10 @@ function LabDoing(
       checkboxRenderCount += 1; // Increment checkbox render count
       return (
         <Grid item key={q} container>
-          <Grid item xs={0.5}>
+          <Grid item xs={1}>
             <Checkbox onChange={handleCheckboxChange} />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={11}>
             <Box typography="body">
               <ReactMarkdown>{q}</ReactMarkdown>
             </Box>
@@ -62,9 +62,9 @@ function LabDoing(
     );
   };
 
-  // TODO: Refractor later to change ReactMarkdown fonts to MUI fonts
+  // TODO: Make timer persist with refresh
   return (
-    <Box>
+    <Box sx={{ pb: 7 }}>
       <Grid container direction="column" spacing={2}>
         <Grid item container>
           <ReactMarkdown>

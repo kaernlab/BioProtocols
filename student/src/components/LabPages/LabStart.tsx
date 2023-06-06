@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Box, Button, Grid } from '@mui/material';
 
 function LabStart(
@@ -18,7 +18,6 @@ function LabStart(
     localStorage.setItem('elapsedTime', '');
   }, []);
 
-  // TODO: Refractor later to change ReactMarkdown fonts to MUI fonts
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
@@ -27,13 +26,11 @@ function LabStart(
         </Box>
       </Grid>
       <Grid item>
-        <Box sx={{ typography: 'body', fontFamily: 'Roboto' }}>
-          {labStartBody && (
-            <ReactMarkdown>
-              {labStartBody}
-            </ReactMarkdown>
-          )}
-        </Box>
+        {labStartBody && (
+        <ReactMarkdown>
+          {labStartBody}
+        </ReactMarkdown>
+        )}
       </Grid>
       <Grid item container spacing={2}>
         <Grid item>

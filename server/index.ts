@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { Credentials } from './utils/interfaces';
+import { Credentials } from './src/utils/interfaces';
 const cors = require('cors');
 
 dotenv.config();

@@ -8,15 +8,10 @@ RUN yarn build
 
 # Stage 2: Serve the built app
 FROM nginx:1.19-alpine
-
-# Copy the nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy the built app from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 3000
 EXPOSE 3000
+
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Start nginx server
 CMD ["nginx", "-g", "daemon off;"]

@@ -24,11 +24,12 @@ function LabEnd(
     }
   }, []);
 
-  // TODO: Refractor later to change ReactMarkdown fonts to MUI fonts
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
-        <ReactMarkdown>{labEndContent || 'Loading'}</ReactMarkdown>
+        <Box typography="body">
+          <ReactMarkdown>{labEndContent || 'Loading'}</ReactMarkdown>
+        </Box>
       </Grid>
       <Grid item>
         <Box typography="body1">

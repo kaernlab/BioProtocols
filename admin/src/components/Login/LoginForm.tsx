@@ -10,17 +10,17 @@ import {
   TextField,
 } from '@mui/material';
 import * as yup from 'yup';
-import { FormValues } from '../../utils/interfaces';
+import { IFormValues } from '../../utils/interfaces';
 
 function LoginForm(
   { handleLogin }:
   {
-    handleLogin: (values: FormValues) => Promise<void>;
+    handleLogin: (values: IFormValues) => Promise<void>;
   },
 ) {
   const handleSubmit = async (
-    values: FormValues,
-    { resetForm, setSubmitting, setErrors }: FormikHelpers<FormValues>,
+    values: IFormValues,
+    { resetForm, setSubmitting, setErrors }: FormikHelpers<IFormValues>,
   ) => {
     setSubmitting(true);
     try {

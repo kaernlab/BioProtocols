@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, AppBar, Toolbar } from '@mui/material';
 import TopNavbar from './components/TopNavbar';
-import PageController from './components/PageController';
+import Routes from './components/Routes';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         </AppBar>
       </Box>
       <Box sx={{ padding: '70px 0px 0px 0px', margin: '0px', width: '100%' }}>
-        <PageController />
+        <Routes />
       </Box>
     </div>
   );

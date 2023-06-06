@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import Home from './Home';
 import { type TPageState } from '../utils/types';
 import Lab from './Lab';
@@ -6,15 +7,12 @@ import jsonData from '../data/data.json';
 import { ILabData } from '../utils/interfaces';
 
 function PageController() {
-  // Assuming the structure of the JSON data is compatible with Record<string, ILabData>
-  // TODO: Call API HERE
+  // TODO: Call API HERE instead of importing jsonData
   const typedData: Record<string, ILabData> = jsonData;
 
   const storedLabId = localStorage.getItem('currentLabId');
   const [currentLabId, setCurrentLabId] = useState(
-    storedLabId
-      ? (storedLabId as TPageState)
-      : '',
+    storedLabId || '',
   );
 
   const storedPage = localStorage.getItem('currentPage');
@@ -40,7 +38,7 @@ function PageController() {
   };
 
   return (
-    <div>
+    <Box sx={{ m: 2 }}>
       {currentPage === 'HOME' ? (
         <Home
           data={typedData}
@@ -57,7 +55,7 @@ function PageController() {
           handleRestartLab={() => setCurrentPage('LAB_START')}
         />
       )}
-    </div>
+    </Box>
   );
 }
 
