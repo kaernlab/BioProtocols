@@ -3,7 +3,7 @@
 ## Tech Stack
 - Node.js
 - Express
-= TypeScript
+- TypeScript
 
 ## How to run
 1. `yarn` to install
