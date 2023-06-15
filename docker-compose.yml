@@ -15,8 +15,8 @@ services:
     build:
       context: ./student
       dockerfile: Dockerfile
-    #ports:
-    #  - '3000:3000'
+    ports:
+      - '3000:3000'
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
@@ -41,7 +41,7 @@ services:
     volumes:
       - /app/node_modules # Inside the container, don't try to override this folder, just leave as is
     restart: on-failure
-    env_file:
+    env_file: #TODO Later
       - ./env/backend.env
   mongo:
     image: 'mongo'
@@ -51,5 +51,5 @@ services:
     volumes: 
       - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./db/mongo-volume:/data/db
-    env_file:
+    env_file: #TODO Later
       - ./env/mongo.env

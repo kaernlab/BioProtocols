@@ -4,10 +4,10 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json yarn.lock ./
-RUN yarn install --production=true
+RUN yarn install
 COPY . .
 
 EXPOSE 3005
 
 # Start nginx server
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]

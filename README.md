@@ -1,9 +1,12 @@
 # BioProtocols
 
+
 ## Install
 
-1. run `make app` to install dependencies for both **student** and **admin** apps
-2. Follow instructions in *README.md* in both subdirectories
+1. Install [node 18-lts](https://nodejs.org/en)
+2. Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+3. run `make app` to install dependencies for both **student** and **admin** apps
+4. Follow instructions in *README.md* in both subdirectories
 
 ## Run as containers
 
