@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TPageState } from '../utils/types';
 import { Dashboard, LabEdit, LabNew } from './Pages';
-import Error from './Pages/Error';
-import jsonData from '../data/data2.json';
-import { EditableContent, ILabData } from '../utils/interfaces';
+import { EditableContent } from '../utils/interfaces';
+import { AppContext } from '../context/AppContextProvider';
+import PageControllerLoading from './Style/PageControllerLoading';
+import { GenericError, PageNotFoundError } from './Errors';
 
 function PageController() {
-  // TODO: Call API HERE instead of importing jsonData
-  const data: Record<string, ILabData> = jsonData;
+  const { data, onChange, error } = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState<TPageState>('HOME');
   const [currentLabId, setCurrentLabId] = useState('');
 
@@ -26,10 +26,21 @@ function PageController() {
     setCurrentPage('LAB_NEW');
   };
 
-  const handleWriteToDB = (obj: EditableContent) => {
-    console.log(obj);
-    // Write to DB
+  const handleWriteToDB = (labId:string, obj: EditableContent) => {
+    onChange({ action: 'set_data', payload: { labId, content: obj } });
+    console.log('Written to db!');
   };
+
+  // TODO: Check if error has been raised
+  // Currently not being activated, just shows loading
+  if (error) {
+    <GenericError msg={JSON.stringify(error)} />;
+  }
+
+  // Check if data is empty
+  if (Object.keys(data).length === 0) {
+    return <PageControllerLoading />;
+  }
 
   switch (currentPage) {
     case 'HOME':
@@ -52,7 +63,7 @@ function PageController() {
     case 'LAB_NEW':
       return (<LabNew handleGoHome={handleGoHome} />);
     default:
-      return (<Error />);
+      return (<PageNotFoundError />);
   }
 }
 

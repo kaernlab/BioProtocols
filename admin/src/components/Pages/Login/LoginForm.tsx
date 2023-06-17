@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import * as yup from 'yup';
-import { IFormValues } from '../../utils/interfaces';
+import { IFormValues } from '../../../utils/interfaces';
 
 function LoginForm(
   { handleLogin }:

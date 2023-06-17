@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-function Error() {
+function PageNotFoundError() {
   return (
     <Grid container direction="column">
       <Box typography="h6">
@@ -21,4 +21,4 @@ function Error() {
   );
 }
 
-export default Error;
+export default PageNotFoundError;

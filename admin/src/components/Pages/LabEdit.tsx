@@ -1,10 +1,20 @@
-import { Box, Divider, Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  Box, Divider, Grid, TextField,
+} from '@mui/material';
+import {
+  Field, FieldProps, Form, Formik, FormikValues, ErrorMessage,
+} from 'formik';
+import {
+  ContentState, EditorState, convertFromHTML, convertToRaw,
+} from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import * as yup from 'yup';
 import { EditableContent, ILabData } from '../../utils/interfaces';
-import { SaveButton, BackToDashboardButton, PreviewWYSIWYG } from '../Style/Styled';
-import HTMLEditor from '../Editor/HTMLEditor';
-
-// Hooks version of the Class below (done by me)
+import {
+  SaveButton, BackToDashboardButton, PreviewWYSIWYG, ResetButton,
+} from '../Style/Styled';
+import CustomFormikRichTextInput from '../Style/CustomFormikRichTextInput';
 
 function LabEdit(
   {
@@ -16,12 +26,11 @@ function LabEdit(
     data: ILabData,
     labId: string,
     handleGoHome: () => void,
-    handleWriteToDB: (obj: EditableContent) => void,
+    handleWriteToDB: (labId: string, obj: EditableContent) => void,
   },
 ) {
-  const [edited, setEdited] = useState(false);
-
-  const originalContent: EditableContent = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const initialContent: EditableContent = {
     title: data.title,
     startBody: data.labStartBody,
     content: {
@@ -32,106 +41,152 @@ function LabEdit(
     finishedBody: data.labFinishedBody,
   };
 
-  const [editableContent, setEditableContent] = useState<EditableContent>(originalContent);
-
-  const handleSave = () => {
-    // TODO: Put Set  edited somewhere
-    setEdited(true);
-    console.log('Original', originalContent);
-    console.log(editableContent);
-    handleWriteToDB(editableContent);
-    console.log('save');
-  };
-
-  const handleChange = (key: string, value: string) => {
-    setEditableContent((prevContent) => ({
-      ...prevContent,
-      [key]: value,
-    }));
+  const convertToEditorState = (rawHTML: string) => {
+    const blocksFromHTML = convertFromHTML(rawHTML);
+    const { contentBlocks } = blocksFromHTML;
+    const contentState = ContentState.createFromBlockArray(contentBlocks);
+    return EditorState.createWithContent(contentState);
   };
 
   return (
-    <Grid container direction="column" spacing={3}>
-      <Grid item container direction="column" spacing={1}>
-        <Grid item container direction="column" spacing={1}>
-          <Grid item>
-            <Box typography="body" sx={{ color: 'red' }}>
-              Editing:
-            </Box>
+    <Formik
+      initialValues={
+        {
+          title: data.title,
+          startBody: convertToEditorState(data.labStartBody),
+          content: {
+            header: convertToEditorState(data.labContent.header),
+            questions: [],
+            footer: convertToEditorState(data.labContent.footer),
+          },
+          finishedBody: convertToEditorState(data.labFinishedBody),
+        }
+      }
+      onSubmit={(values) => {
+        const editedContent = {
+          title: values.title,
+          startBody: draftToHtml(convertToRaw(values.startBody.getCurrentContent())),
+          content: {
+            header: draftToHtml(convertToRaw(values.content.header.getCurrentContent())),
+            questions: [],
+            footer: draftToHtml(convertToRaw(values.content.footer.getCurrentContent())),
+          },
+          finishedBody: draftToHtml(convertToRaw(values.finishedBody.getCurrentContent())),
+        };
+        handleWriteToDB(labId, editedContent);
+        console.log('save');
+      }}
+      validationSchema={yup.object().shape({
+        title: yup.string().required('Title is required'),
+      })}
+    >
+      {({
+        values, dirty, handleSubmit, resetForm, isValid,
+      }) => (
+        <Form>
+          <Grid container direction="column" spacing={3}>
+            <Grid item container direction="column" spacing={1}>
+              <Grid item container direction="column" spacing={2}>
+                <Grid item>
+                  <Box typography="body" sx={{ color: 'red' }}>
+                    Editing:
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <Box typography="body">
+                    Lab ID (cannot be changed):
+                    {' '}
+                    {labId}
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <Field name="title">
+                    {({ field }: FieldProps<FormikValues['title']>) => (
+                      <TextField
+                        required
+                        sx={{ width: '500px' }}
+                        label="Required"
+                        name={field.name}
+                        value={values.title}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      />
+                    )}
+                  </Field>
+                  <ErrorMessage name="title">
+                    {(msg) => <div style={{ color: 'red' }}>{msg}</div>}
+                  </ErrorMessage>
+                </Grid>
+              </Grid>
+              <Grid item container spacing={2}>
+                <Grid item>
+                  <BackToDashboardButton onClick={handleGoHome} />
+                </Grid>
+                <Grid item>
+                  <SaveButton disabled={!dirty || !isValid} onClick={handleSubmit} />
+                </Grid>
+                <Grid item>
+                  <ResetButton disabled={!dirty} onClick={resetForm} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Divider />
+            </Grid>
+            <Grid item>
+              <Grid item container direction="column">
+                <Box typography="h6">
+                  Edit Lab Start Page
+                </Box>
+                <CustomFormikRichTextInput name="startBody" />
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Divider />
+            </Grid>
+            <Grid item container>
+              <Grid item>
+                <Box typography="h6">
+                  Edit Lab Content
+                </Box>
+              </Grid>
+              <Grid item container spacing={3} direction="column">
+                <Grid item>
+                  <Box typography="subtitle2">
+                    Edit Lab Content header
+                  </Box>
+                  <CustomFormikRichTextInput name="content.header" />
+                </Grid>
+                <Grid item>
+                  <Box typography="subtitle2">
+                    Edit Lab Content questions
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <Box typography="subtitle2">
+                    Edit Lab Content footer
+                  </Box>
+                  <CustomFormikRichTextInput name="content.footer" />
+                </Grid>
+                <Grid item>
+                  <PreviewWYSIWYG previewContentRaw="Examples go here" />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Divider />
+            </Grid>
+            <Grid item>
+              <Box typography="h6">
+                Lab Finished Body
+              </Box>
+              <CustomFormikRichTextInput name="finishedBody" />
+            </Grid>
+            <Grid item />
           </Grid>
-          <Grid item>
-            <Box typography="body">
-              Lab ID (cannot be changed):
-              {' '}
-              {labId}
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box typography="h5">
-              {data.title}
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid item container spacing={2}>
-          <Grid item>
-            <BackToDashboardButton onClick={handleGoHome} />
-          </Grid>
-          <Grid item>
-            <SaveButton disabled={!edited} onClick={handleSave} />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Divider />
-      </Grid>
-      <Grid item>
-        <Box typography="h6">
-          Edit Lab Start Body
-        </Box>
-        <HTMLEditor k="startBody" handleChange={handleChange} value={data.labStartBody} />
-        <PreviewWYSIWYG previewContentRaw={editableContent.startBody} />
-      </Grid>
-      <Grid item>
-        <Divider />
-      </Grid>
-      <Grid item container>
-        <Grid item>
-          <Box typography="h6">
-            Edit Lab Content
-          </Box>
-        </Grid>
-        <Grid item container spacing={2}>
-          <Grid item>
-            <Box typography="subtitle2">
-              Edit Lab Content header
-            </Box>
-            <PreviewWYSIWYG previewContentRaw={data.labContent.header} />
-          </Grid>
-          <Grid item>
-            <Box typography="subtitle2">
-              Edit Lab Content questions
-            </Box>
-            <PreviewWYSIWYG previewContentRaw={data.labContent.questions} />
-          </Grid>
-          <Grid item>
-            <Box typography="subtitle2">
-              Edit Lab Content footer
-            </Box>
-            <PreviewWYSIWYG previewContentRaw={data.labContent.footer} />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Divider />
-      </Grid>
-      <Grid item>
-        <Box typography="h6">
-          Lab Finished Body
-        </Box>
-        <PreviewWYSIWYG previewContentRaw={data.labFinishedBody} />
-      </Grid>
-      <Grid item />
-    </Grid>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

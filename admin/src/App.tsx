@@ -13,7 +13,7 @@ function App() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Box sx={{ padding: '70px 0px 0px 0px', margin: '0px', width: '100%' }}>
+      <Box mr={2} sx={{ padding: '70px 0px 0px 0px', width: '100%' }}>
         <Routes />
       </Box>
     </div>

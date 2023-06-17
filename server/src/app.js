@@ -4,13 +4,18 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes/routes');
-const app = express();
 const { connectDB } = require('./config/db');
+var cors = require('cors')
+const { notFound, errorHandler } = require('./middleware');
+
+const app = express();
 
 // Connect Database
 if (process.env.NODE_ENV !== 'test') {
   connectDB();
 }
+
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,8 +27,7 @@ app.get('/test', (req, res) => {
 
 routes(app);
 
-app.use((err, req, res, next) => {
-  res.status(422).send({ error: err.message });
-});
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;

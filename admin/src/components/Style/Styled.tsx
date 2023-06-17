@@ -4,8 +4,8 @@ import {
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 function BackToDashboardButton({ onClick }: { onClick: () => void }) {
   return (
@@ -23,9 +23,23 @@ function SaveButton({ disabled, onClick } : { disabled: boolean, onClick: ()=> v
       onClick={onClick}
       disabled={disabled}
       variant="contained"
+      type="submit"
     >
       <SaveIcon />
       Save
+    </Button>
+  );
+}
+
+function ResetButton({ disabled, onClick }: { disabled: boolean, onClick: () => void }) {
+  return (
+    <Button
+      onClick={onClick}
+      disabled={disabled}
+      variant="contained"
+    >
+      <RestartAltIcon />
+      Reset
     </Button>
   );
 }
@@ -38,19 +52,19 @@ function PreviewWYSIWYG({ previewContentRaw }: { previewContentRaw: string[] | s
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Box typography="body">Raw</Box>
+        <Box typography="body">Preview</Box>
       </AccordionSummary>
       <AccordionDetails>
         <Box typography="body">
           { typeof previewContentRaw === 'string' ? (
-            <ReactMarkdown>
+            <div>
               {previewContentRaw}
-            </ReactMarkdown>
+            </div>
           )
-            : previewContentRaw.map((item) => (
-              <ReactMarkdown key={item}>
-                {item}
-              </ReactMarkdown>
+            : previewContentRaw.map((rawItem) => (
+              <div key={rawItem}>
+                {rawItem}
+              </div>
             ))}
         </Box>
       </AccordionDetails>
@@ -59,5 +73,5 @@ function PreviewWYSIWYG({ previewContentRaw }: { previewContentRaw: string[] | s
 }
 
 export {
-  BackToDashboardButton, SaveButton, PreviewWYSIWYG,
+  BackToDashboardButton, SaveButton, ResetButton, PreviewWYSIWYG,
 };
