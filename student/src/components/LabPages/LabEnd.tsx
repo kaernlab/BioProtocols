@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid } from '@mui/material';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import parse from 'html-react-parser';
 import TimerDisplay from '../Timer/TimerDisplay';
 import { ITime } from '../../utils/interfaces';
 
@@ -24,11 +24,12 @@ function LabEnd(
     }
   }, []);
 
-  // TODO: Refractor later to change ReactMarkdown fonts to MUI fonts
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
-        <ReactMarkdown>{labEndContent || 'Loading'}</ReactMarkdown>
+        <Box typography="body">
+          {parse(labEndContent || 'Loading')}
+        </Box>
       </Grid>
       <Grid item>
         <Box typography="body1">

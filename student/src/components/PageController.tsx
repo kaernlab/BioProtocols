@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
+import axios from 'axios';
 import Home from './Home';
 import { type TPageState } from '../utils/types';
 import Lab from './Lab';
 import jsonData from '../data/data.json';
 import { ILabData } from '../utils/interfaces';
+import { API_URL } from '../config';
+import PageControllerLoading from './Style/PageControllerLoading';
 
 function PageController() {
-  // Assuming the structure of the JSON data is compatible with Record<string, ILabData>
-  // TODO: Call API HERE
-  const typedData: Record<string, ILabData> = jsonData;
+  const [typedData, setTypedData] = useState<Record<string, ILabData>>({});
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/v1/labs/all`)
+      .then((res) => {
+        setTypedData(res.data);
+      })
+      .catch(() => {
+        setTypedData(jsonData); // set default data
+      });
+  }, []);
 
   const storedLabId = localStorage.getItem('currentLabId');
   const [currentLabId, setCurrentLabId] = useState(
-    storedLabId
-      ? (storedLabId as TPageState)
-      : '',
+    storedLabId || '',
   );
 
   const storedPage = localStorage.getItem('currentPage');
@@ -39,8 +50,13 @@ function PageController() {
     setCurrentPage('HOME');
   };
 
+  // Check if data is empty
+  if (Object.keys(typedData).length === 0) {
+    return <PageControllerLoading />;
+  }
+
   return (
-    <div>
+    <Box sx={{ m: 2 }}>
       {currentPage === 'HOME' ? (
         <Home
           data={typedData}
@@ -57,7 +73,7 @@ function PageController() {
           handleRestartLab={() => setCurrentPage('LAB_START')}
         />
       )}
-    </div>
+    </Box>
   );
 }
 

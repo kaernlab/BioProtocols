@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Box, AppBar, Toolbar } from '@mui/material';
+import TopNavbar from './components/TopNavbar';
+import Routes from './components/Routes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Box sx={{ display: 'flex', width: '100%' }}>
+        <AppBar position="fixed">
+          <Toolbar sx={{ maxHeight: '70px', minHeight: '56px' }}>
+            <TopNavbar />
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Box mr={2} sx={{ padding: '70px 0px 0px 0px', width: '100%' }}>
+        <Routes />
+      </Box>
     </div>
   );
 }

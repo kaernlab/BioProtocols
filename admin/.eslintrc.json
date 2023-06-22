@@ -1,29 +1,21 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
-  ],
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true
+    "es2021": true
   },
-  "rules": {
-    "quotes": [
-      "error",
-      "single"
-    ]
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb-typescript"
+  ],
+  "overrides": [],
+  "parserOptions": {
+    //"ecmaVersion": "latest",
+    //"sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  }
+  "plugins": [
+    "react"
+  ],
+  "rules": {}
 }

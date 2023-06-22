@@ -1,5 +1,5 @@
-function isFirstCharANumber(str: string): boolean {
-  return /^\d$/.test(str.charAt(0));
+function isThirdCharANumber(str: string): boolean {
+  return /^\d$/.test(str.charAt(3));
 }
 
-export default isFirstCharANumber;
+export default isThirdCharANumber;
