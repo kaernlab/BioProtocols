@@ -6,7 +6,4 @@ student:
 admin:
 	@cd admin && yarn
 
-server:
-	@cd server && yarn
-
-app: student admin server
+app: student admin

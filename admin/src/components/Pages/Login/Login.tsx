@@ -1,23 +1,12 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useContext } from 'react';
 import { Box } from '@mui/material';
+import axios from 'axios';
 import LoginForm from './LoginForm';
-import { IFormValues, ICredentials } from '../../../utils/interfaces';
+import { IFormValues } from '../../../utils/interfaces';
+import { AppContext } from '../../../context/AppContextProvider';
 import { TUserToken } from '../../../utils/types';
-
-async function loginUser(credentials: ICredentials) {
-  return fetch('http://localhost:3005/v1/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(credentials),
-  })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error('Error:', error);
-      // Handle the error appropriately (e.g., show an error message)
-    });
-}
+import { API_URL } from '../../../config';
 
 function Login(
   { setToken }: {
@@ -25,14 +14,27 @@ function Login(
   },
 ) {
   const handleLogin = async (values: IFormValues) => {
-    const token = await loginUser({
-      username: values.username,
-      password: values.password,
+    /* Integrate with Context Provider later
+    onChange({
+      action: 'login',
+      payload: {
+        username: values.username,
+        password: values.password,
+      },
     });
-    if (token.error) {
-      throw new Error(token.error);
-    }
-    setToken(token);
+    */
+    axios
+      .post(
+        `${API_URL}/v1/user/login`,
+        {
+          username: values.username,
+          password: values.password,
+        },
+      )
+      .then((res) => {
+        setToken(res.data);
+      })
+      .catch((e) => console.log(e)); /// TODO: Handle this error better
   };
 
   return (

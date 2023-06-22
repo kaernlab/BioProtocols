@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { TPageState } from '../utils/types';
 import { Dashboard, LabEdit, LabNew } from './Pages';
-import { EditableContent } from '../utils/interfaces';
 import { AppContext } from '../context/AppContextProvider';
 import PageControllerLoading from './Style/PageControllerLoading';
 import { GenericError, PageNotFoundError } from './Errors';
+import { ILabData } from '../utils/interfaces';
 
 function PageController() {
   const { data, onChange, error } = useContext(AppContext);
@@ -26,8 +26,8 @@ function PageController() {
     setCurrentPage('LAB_NEW');
   };
 
-  const handleWriteToDB = (labId:string, obj: EditableContent) => {
-    onChange({ action: 'set_data', payload: { labId, content: obj } });
+  const handleWriteToDB = (labId: string, content: ILabData) => {
+    onChange({ action: 'set_data', payload: { labId, content } });
     console.log('Written to db!');
   };
 

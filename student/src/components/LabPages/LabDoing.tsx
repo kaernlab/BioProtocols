@@ -1,8 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Box, Grid, Checkbox } from '@mui/material';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import parse from 'html-react-parser';
 import { ILabProtocols } from '../../utils/interfaces';
-import isFirstCharANumber from '../../utils/functions';
+import isThirdCharANumber from '../../utils/functions';
 import LabDoingProgress from './LabDoingProgress';
 
 function LabDoing(
@@ -36,7 +36,8 @@ function LabDoing(
   };
 
   const renderCheckbox = (q: string) => {
-    if (isFirstCharANumber(q)) {
+    console.log(q);
+    if (isThirdCharANumber(q)) {
       checkboxRenderCount += 1; // Increment checkbox render count
       return (
         <Grid item key={q} container>
@@ -45,7 +46,7 @@ function LabDoing(
           </Grid>
           <Grid item xs={11}>
             <Box typography="body">
-              <ReactMarkdown>{q}</ReactMarkdown>
+              {parse(q)}
             </Box>
           </Grid>
         </Grid>
@@ -55,7 +56,7 @@ function LabDoing(
       <Grid item key={q} container>
         <Grid item xs={10}>
           <Box typography="body">
-            <ReactMarkdown>{q}</ReactMarkdown>
+            {parse(q)}
           </Box>
         </Grid>
       </Grid>
@@ -67,9 +68,7 @@ function LabDoing(
     <Box sx={{ pb: 7 }}>
       <Grid container direction="column" spacing={2}>
         <Grid item container>
-          <ReactMarkdown>
-            {content?.header || 'Loading'}
-          </ReactMarkdown>
+          {parse(content?.header || 'Loading')}
         </Grid>
         <Grid item container spacing={1} direction="column">
           {content
@@ -77,9 +76,7 @@ function LabDoing(
             : <Grid item>Loading</Grid>}
         </Grid>
         <Grid item>
-          <ReactMarkdown>
-            {content ? content.footer : 'Loading'}
-          </ReactMarkdown>
+          {parse(content?.footer || 'Loading')}
         </Grid>
       </Grid>
       <LabDoingProgress

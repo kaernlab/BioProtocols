@@ -17,23 +17,10 @@ export interface ILab {
 export interface ILabData {
   title: string;
   labStartBody: string;
-  labContent: ILabProtocols;
-  labFinishedBody: string;
-}
-
-export interface ILabProtocols {
-  header: string,
-  questions: string[],
-  footer: string,
-}
-
-export interface EditableContent {
-  title: string;
-  startBody: string;
-  content: {
+  labContent: {
     header: string,
     questions: string[],
     footer: string,
   }
-  finishedBody: string;
+  labFinishedBody: string;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid } from '@mui/material';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import parse from 'html-react-parser';
 import TimerDisplay from '../Timer/TimerDisplay';
 import { ITime } from '../../utils/interfaces';
 
@@ -28,7 +28,7 @@ function LabEnd(
     <Grid container direction="column" spacing={2}>
       <Grid item>
         <Box typography="body">
-          <ReactMarkdown>{labEndContent || 'Loading'}</ReactMarkdown>
+          {parse(labEndContent || 'Loading')}
         </Box>
       </Grid>
       <Grid item>

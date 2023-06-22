@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
+import axios from 'axios';
 import Home from './Home';
 import { type TPageState } from '../utils/types';
 import Lab from './Lab';
 import jsonData from '../data/data.json';
 import { ILabData } from '../utils/interfaces';
+import { API_URL } from '../config';
+import PageControllerLoading from './Style/PageControllerLoading';
 
 function PageController() {
-  // TODO: Call API HERE instead of importing jsonData
-  const typedData: Record<string, ILabData> = jsonData;
+  const [typedData, setTypedData] = useState<Record<string, ILabData>>({});
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/v1/labs/all`)
+      .then((res) => {
+        setTypedData(res.data);
+      })
+      .catch(() => {
+        setTypedData(jsonData); // set default data
+      });
+  }, []);
 
   const storedLabId = localStorage.getItem('currentLabId');
   const [currentLabId, setCurrentLabId] = useState(
@@ -36,6 +49,11 @@ function PageController() {
     setCurrentLabId(''); // clear selected lab
     setCurrentPage('HOME');
   };
+
+  // Check if data is empty
+  if (Object.keys(typedData).length === 0) {
+    return <PageControllerLoading />;
+  }
 
   return (
     <Box sx={{ m: 2 }}>

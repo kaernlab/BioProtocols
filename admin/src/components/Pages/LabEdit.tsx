@@ -10,7 +10,7 @@ import {
 } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import * as yup from 'yup';
-import { EditableContent, ILabData } from '../../utils/interfaces';
+import { ILabData } from '../../utils/interfaces';
 import {
   SaveButton, BackToDashboardButton, PreviewWYSIWYG, ResetButton,
 } from '../Style/Styled';
@@ -26,19 +26,19 @@ function LabEdit(
     data: ILabData,
     labId: string,
     handleGoHome: () => void,
-    handleWriteToDB: (labId: string, obj: EditableContent) => void,
+    handleWriteToDB: (labId: string, obj: ILabData) => void,
   },
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const initialContent: EditableContent = {
+  const initialContent: ILabData = {
     title: data.title,
-    startBody: data.labStartBody,
-    content: {
+    labStartBody: data.labStartBody,
+    labContent: {
       header: data.labContent.header,
       questions: data.labContent.questions,
       footer: data.labContent.footer,
     },
-    finishedBody: data.labFinishedBody,
+    labFinishedBody: data.labFinishedBody,
   };
 
   const convertToEditorState = (rawHTML: string) => {
@@ -53,25 +53,25 @@ function LabEdit(
       initialValues={
         {
           title: data.title,
-          startBody: convertToEditorState(data.labStartBody),
-          content: {
+          labStartBody: convertToEditorState(data.labStartBody),
+          labContent: {
             header: convertToEditorState(data.labContent.header),
             questions: [],
             footer: convertToEditorState(data.labContent.footer),
           },
-          finishedBody: convertToEditorState(data.labFinishedBody),
+          labFinishedBody: convertToEditorState(data.labFinishedBody),
         }
       }
       onSubmit={(values) => {
         const editedContent = {
           title: values.title,
-          startBody: draftToHtml(convertToRaw(values.startBody.getCurrentContent())),
-          content: {
-            header: draftToHtml(convertToRaw(values.content.header.getCurrentContent())),
+          labStartBody: draftToHtml(convertToRaw(values.labStartBody.getCurrentContent())),
+          labContent: {
+            header: draftToHtml(convertToRaw(values.labContent.header.getCurrentContent())),
             questions: [],
-            footer: draftToHtml(convertToRaw(values.content.footer.getCurrentContent())),
+            footer: draftToHtml(convertToRaw(values.labContent.footer.getCurrentContent())),
           },
-          finishedBody: draftToHtml(convertToRaw(values.finishedBody.getCurrentContent())),
+          labFinishedBody: draftToHtml(convertToRaw(values.labFinishedBody.getCurrentContent())),
         };
         handleWriteToDB(labId, editedContent);
         console.log('save');
@@ -138,7 +138,7 @@ function LabEdit(
                 <Box typography="h6">
                   Edit Lab Start Page
                 </Box>
-                <CustomFormikRichTextInput name="startBody" />
+                <CustomFormikRichTextInput name="labStartBody" />
               </Grid>
             </Grid>
             <Grid item>
@@ -155,7 +155,7 @@ function LabEdit(
                   <Box typography="subtitle2">
                     Edit Lab Content header
                   </Box>
-                  <CustomFormikRichTextInput name="content.header" />
+                  <CustomFormikRichTextInput name="labContent.header" />
                 </Grid>
                 <Grid item>
                   <Box typography="subtitle2">
@@ -166,7 +166,7 @@ function LabEdit(
                   <Box typography="subtitle2">
                     Edit Lab Content footer
                   </Box>
-                  <CustomFormikRichTextInput name="content.footer" />
+                  <CustomFormikRichTextInput name="labContent.footer" />
                 </Grid>
                 <Grid item>
                   <PreviewWYSIWYG previewContentRaw="Examples go here" />
@@ -180,7 +180,7 @@ function LabEdit(
               <Box typography="h6">
                 Lab Finished Body
               </Box>
-              <CustomFormikRichTextInput name="finishedBody" />
+              <CustomFormikRichTextInput name="labFinishedBody" />
             </Grid>
             <Grid item />
           </Grid>

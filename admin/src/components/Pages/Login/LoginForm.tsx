@@ -86,6 +86,7 @@ function LoginForm(
                     id="outlined-basic"
                     autoComplete="off"
                     variant="outlined"
+                    type="password"
                     label="Password"
                     placeholder="password123"
                     error={touched.password && Boolean(errors.password)}

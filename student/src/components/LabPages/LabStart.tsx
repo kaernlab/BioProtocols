@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { Box, Button, Grid } from '@mui/material';
+import parse from 'html-react-parser';
 
 function LabStart(
   {
@@ -26,11 +26,7 @@ function LabStart(
         </Box>
       </Grid>
       <Grid item>
-        {labStartBody && (
-        <ReactMarkdown>
-          {labStartBody}
-        </ReactMarkdown>
-        )}
+        {parse(labStartBody || 'Loading')}
       </Grid>
       <Grid item container spacing={2}>
         <Grid item>
